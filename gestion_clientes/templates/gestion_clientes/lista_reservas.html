@@ -1,0 +1,15 @@
+{% extends 'gestion_clientes/base.html' %}
+{% block contenido %}
+    <h2>Reservas</h2>
+    <a href="{% url 'crear_reserva' %}" class="btn">Crear Nueva Reserva</a>
+    <ul>
+        {% for reserva in reservas %}
+        <li>
+            {{ reserva.cliente.nombre }} - {{ reserva.servicio.nombre }} - {{ reserva.fecha_hora|date:"d M Y H:i" }}
+            <a href="{% url 'editar_reserva' reserva.id %}">Editar</a>
+        </li>
+        {% empty %}
+        <li>No hay reservas.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

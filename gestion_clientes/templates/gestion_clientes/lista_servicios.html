@@ -1,0 +1,16 @@
+{% extends 'gestion_clientes/base.html' %}
+{% block contenido %}
+<h2>Lista de Servicios</h2>
+<a href="{% url 'crear_servicio' %}" class="btn">Crear Servicio</a>
+<ul>
+    {% for servicio in servicios %}
+    <li>
+        {{ servicio.nombre }} - {{ servicio.descripcion }} - Precio: {{ servicio.precio }}
+        <a href="{% url 'editar_servicio' servicio.id %}">Editar</a> |
+        <a href="{% url 'eliminar_servicio' servicio.id %}">Eliminar</a>
+    </li>
+    {% empty %}
+    <li>No hay servicios registrados.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

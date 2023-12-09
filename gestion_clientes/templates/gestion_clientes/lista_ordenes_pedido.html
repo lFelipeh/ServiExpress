@@ -1,0 +1,16 @@
+{% extends 'gestion_clientes/base.html' %}
+{% block contenido %}
+<h2>Lista de Órdenes de Pedido</h2>
+<a href="{% url 'crear_orden_pedido' %}" class="btn">Crear Orden de Pedido</a>
+<ul>
+    {% for orden in ordenes %}
+    <li>
+        Orden N°: {{ orden.id }} - Proveedor: {{ orden.proveedor.nombre_empresa }}
+        <a href="{% url 'crear_orden_pedido' orden.id %}">Crear</a>
+        <a href="{% url 'eliminar_orden_pedido' orden.id %}">Eliminar</a>
+    </li>
+    {% empty %}
+    <li>No hay órdenes de pedido registradas.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

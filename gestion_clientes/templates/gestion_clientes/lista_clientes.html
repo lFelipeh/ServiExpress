@@ -1,0 +1,12 @@
+{% extends 'gestion_clientes/base.html' %}
+{% block contenido %}
+<h2>Lista de Clientes</h2>
+<a href="{% url 'crear_cliente' %}" class="btn">Crear Nuevo Cliente</a>
+<ul>
+    {% for cliente in clientes %}
+    <li>{{ cliente.nombre }} - {{ cliente.email }}</li>
+    {% empty %}
+    <li>No hay clientes registrados.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

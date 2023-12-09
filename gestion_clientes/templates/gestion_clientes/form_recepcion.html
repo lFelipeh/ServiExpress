@@ -1,0 +1,9 @@
+{% extends 'gestion_clientes/base.html' %}
+{% block contenido %}
+<h2>{% if recepcion %}Editar Recepción{% else %}Nueva Recepción{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar Recepción</button>
+</form>
+{% endblock %}

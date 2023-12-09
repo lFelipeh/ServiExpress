@@ -1,0 +1,18 @@
+{% extends 'gestion_clientes/base.html' %}
+{% block contenido %}
+<h2>Lista de Recepciones de Productos</h2>
+<a href="{% url 'crear_recepcion' %}" class="btn">Crear Recepción</a>
+<ul>
+    {% for recepcion in recepciones %}
+    <li>
+        Orden de Pedido: {{ recepcion.orden_pedido.id }} - 
+        Fecha: {{ recepcion.fecha_recepcion }} - 
+        Cantidad: {{ recepcion.cantidad_recibida }}
+        <a href="{% url 'editar_recepcion' recepcion.id %}">Editar</a> |
+        <a href="{% url 'eliminar_recepcion' recepcion.id %}">Eliminar</a>
+    </li>
+    {% empty %}
+    <li>No hay recepciones registradas.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

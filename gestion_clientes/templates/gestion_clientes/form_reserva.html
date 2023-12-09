@@ -1,0 +1,9 @@
+{% extends 'gestion_clientes/base.html' %}
+{% block contenido %}
+    <h2>{% if reserva %}Editar Reserva{% else %}Nueva Reserva{% endif %}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+{% endblock %}

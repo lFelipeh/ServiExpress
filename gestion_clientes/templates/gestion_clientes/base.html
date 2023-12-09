@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Taller Mecánico SERVIEXPRESS</title>
+    <link rel="stylesheet" href="{% static 'gestion_clientes/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Taller Mecánico SERVIEXPRESS</h1>
+    </header>
+    <div class="nav-links">
+        <a href="{% url 'lista_clientes' %}">Listar Clientes</a> |
+        <a href="{% url 'lista_empleados' %}">Listar Empleados</a> |
+        <a href="{% url 'lista_servicios' %}">Listar Servicios</a> |
+        <a href="{% url 'lista_proveedores' %}">Listar Proveedores</a> |
+        <a href="{% url 'lista_boletas' %}">Listar Boletas</a> |
+        <a href="{% url 'lista_reservas' %}">Listar Reservas</a> |
+        <a href="{% url 'lista_ordenes_pedido' %}">Listar Ordenes de pedido</a> |
+        <a href="{% url 'lista_recepciones' %}">Listar Recepciones de pedido</a> |
+        <a href="{% url 'registrar' %}">Registrarse</a> |
+        <a href="{% url 'acceder' %}">Acceder</a>
+    </div>
+    <div class="container">
+        {% block contenido %}
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends 'gestion_clientes/base.html' %}
+{% block contenido %}
+<h2>Lista de Boletas</h2>
+<a href="{% url 'crear_boleta' %}" class="btn">Crear Boleta</a>
+<ul>
+    {% for boleta in boletas %}
+    <li>Boleta N° {{ boleta.id }} - Cliente: {{ boleta.cliente.nombre }} - Total: {{ boleta.total }}</li>
+    {% empty %}
+    <li>No hay boletas registradas.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
