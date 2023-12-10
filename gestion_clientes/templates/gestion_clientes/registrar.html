@@ -1,9 +1,23 @@
-{% extends 'gestion_clientes/base.html' %}
-{% block contenido %}
-<h2>Registro de Usuario</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ formulario.as_p }}
-    <button type="submit" class="btn">Registrarse</button>
-</form>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Usuario</title>
+    <style>
+        /* Estilos generales */
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        form { max-width: 300px; margin: auto; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 5px 0; }
+        button { padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+    <h2>Registro de Usuario</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ formulario.as_p }}
+        <button type="submit" class="btn">Registrarse</button>
+    </form>
+    <a href="{% url 'acceder' %}">Volver atrás</a>
+</body>
+</html>

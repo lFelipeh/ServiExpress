@@ -20,7 +20,7 @@ from gestion_clientes import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.lista_clientes, name='home'),
+    path('', views.acceder, name='home'),
     path('clientes/', views.lista_clientes, name='lista_clientes'),
     path('clientes/crear/', views.crear_cliente, name='crear_cliente'),
     path('reservas/', views.lista_reservas, name='lista_reservas'),
@@ -51,5 +51,4 @@ urlpatterns = [
     path('recepciones/crear/', views.crear_recepcion, name='crear_recepcion'),
     path('informes/', views.informes, name='informes'),
     path('ordenes_pedido/eliminar/<int:id>/', views.eliminar_orden_pedido, name='eliminar_orden_pedido'),
-
 ]

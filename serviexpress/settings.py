@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = 'lista_clientes'  # Reemplaza con la URL a la que deseas redirigir después del login.
+LOGIN_URL = 'acceder'
+SITE_ID = 1
 
 # Application definition
 

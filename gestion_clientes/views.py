@@ -3,11 +3,14 @@ from .models import Cliente, Reserva, Proveedor,Empleado, Servicio, Boleta, Orde
 from .forms import ClienteForm, ReservaForm, FormularioRegistroUsuario, FormularioProveedor, FormularioEmpleado, FormularioServicio, FormularioBoleta, FormularioOrdenPedido , FormularioRecepcionProducto
 from django.contrib.auth import authenticate, login
 from django.db.models import Count, Sum
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def lista_clientes(request):
     clientes = Cliente.objects.all()
     return render(request, 'gestion_clientes/lista_clientes.html', {'clientes': clientes})
 
+@login_required
 def crear_cliente(request):
     form = ClienteForm(request.POST or None)
     if form.is_valid():
@@ -15,6 +18,7 @@ def crear_cliente(request):
         return redirect('lista_clientes')
     return render(request, 'gestion_clientes/form_cliente.html', {'form': form})
 
+@login_required
 def lista_reservas(request):
     reservas = Reserva.objects.all()
     return render(request, 'gestion_clientes/lista_reservas.html', {'reservas': reservas})
@@ -29,6 +33,7 @@ def crear_reserva(request):
         form = ReservaForm()
     return render(request, 'gestion_clientes/form_reserva.html', {'form': form})
 
+@login_required
 def editar_reserva(request, id):
     reserva = Reserva.objects.get(id=id)
     form = ReservaForm(request.POST or None, instance=reserva)
@@ -37,6 +42,7 @@ def editar_reserva(request, id):
         return redirect('lista_reservas')
     return render(request, 'gestion_clientes/form_reserva.html', {'form': form, 'reserva': reserva})
 
+@login_required
 def editar_cliente(request, id):
     cliente = Cliente.objects.get(id=id)
     form = ClienteForm(request.POST or None, instance=cliente)
@@ -45,10 +51,12 @@ def editar_cliente(request, id):
         return redirect('lista_clientes')
     return render(request, 'gestion_clientes/form_cliente.html', {'form': form})
 
+@login_required
 def eliminar_cliente(request, id):
     cliente = Cliente.objects.get(id=id)
     cliente.delete()
     return redirect('lista_clientes')
+
 
 def registrar(request):
     if request.method == 'POST':
@@ -59,32 +67,30 @@ def registrar(request):
             contraseña = formulario.cleaned_data.get('password1')
             usuario = authenticate(username=nombre_usuario, password=contraseña)
             login(request, usuario)
-            return redirect('inicio')
+            return redirect('acceder')
     else:
         formulario = FormularioRegistroUsuario()
     return render(request, 'gestion_clientes/registrar.html', {'formulario': formulario})
 
 def acceder(request):
     if request.method == 'POST':
-        # Lógica para manejar el inicio de sesión
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Redirigir a la página deseada después del inicio de sesión
-            return redirect('alguna_url_destino')
+            return redirect('lista_clientes')  # Cambia a la URL deseada después del login
         else:
-            # Manejar el caso de inicio de sesión fallido
-            return render(request, 'gestion_clientes/acceder.html', {'error': 'Usuario o contraseña incorrectos'})
+            return render(request, 'gestion_clientes/acceder.html', {'error': 'Credenciales incorrectas'})
     else:
-        # Presentar el formulario de inicio de sesión
         return render(request, 'gestion_clientes/acceder.html')
 
+@login_required
 def lista_boletas(request):
     boletas = Boleta.objects.all()
     return render(request, 'gestion_clientes/lista_boletas.html', {'boletas': boletas})
 
+@login_required
 def crear_boleta(request):
     if request.method == 'POST':
         form = FormularioBoleta(request.POST)
@@ -95,10 +101,12 @@ def crear_boleta(request):
         form = FormularioBoleta()
     return render(request, 'gestion_clientes/form_boleta.html', {'form': form})
 
+@login_required
 def lista_proveedores(request):
     proveedores = Proveedor.objects.all()
     return render(request, 'gestion_clientes/lista_proveedores.html', {'proveedores': proveedores})
 
+@login_required
 def crear_proveedor(request):
     if request.method == 'POST':
         form = FormularioProveedor(request.POST)
@@ -109,6 +117,7 @@ def crear_proveedor(request):
         form = FormularioProveedor()
     return render(request, 'gestion_clientes/form_proveedor.html', {'form': form})
 
+@login_required
 def editar_proveedor(request, id):
     proveedor = Proveedor.objects.get(id=id)
     if request.method == 'POST':
@@ -120,15 +129,18 @@ def editar_proveedor(request, id):
         form = FormularioProveedor(instance=proveedor)
     return render(request, 'gestion_clientes/form_proveedor.html', {'form': form})
 
+@login_required
 def eliminar_proveedor(request, id):
     proveedor = Proveedor.objects.get(id=id)
     proveedor.delete()
     return redirect('lista_proveedores')
 
+@login_required
 def lista_empleados(request):
     empleados = Empleado.objects.all()
     return render(request, 'gestion_clientes/lista_empleados.html', {'empleados': empleados})
 
+@login_required
 def crear_empleado(request):
     if request.method == 'POST':
         form = FormularioEmpleado(request.POST)
@@ -139,6 +151,7 @@ def crear_empleado(request):
         form = FormularioEmpleado()
     return render(request, 'gestion_clientes/form_empleado.html', {'form': form})
 
+@login_required
 def editar_empleado(request, id):
     empleado = Empleado.objects.get(id=id)
     if request.method == 'POST':
@@ -150,15 +163,18 @@ def editar_empleado(request, id):
         form = FormularioEmpleado(instance=empleado)
     return render(request, 'gestion_clientes/form_empleado.html', {'form': form})
 
+@login_required
 def eliminar_empleado(request, id):
     empleado = Empleado.objects.get(id=id)
     empleado.delete()
     return redirect('lista_empleados')
 
+@login_required
 def lista_servicios(request):
     servicios = Servicio.objects.all()
     return render(request, 'gestion_clientes/lista_servicios.html', {'servicios': servicios})
 
+@login_required
 def crear_servicio(request):
     if request.method == 'POST':
         form = FormularioServicio(request.POST)
@@ -169,6 +185,7 @@ def crear_servicio(request):
         form = FormularioServicio()
     return render(request, 'gestion_clientes/form_servicio.html', {'form': form})
 
+@login_required
 def editar_servicio(request, id):
     servicio = Servicio.objects.get(id=id)
     if request.method == 'POST':
@@ -180,15 +197,18 @@ def editar_servicio(request, id):
         form = FormularioServicio(instance=servicio)
     return render(request, 'gestion_clientes/form_servicio.html', {'form': form})
 
+@login_required
 def eliminar_servicio(request, id):
     servicio = Servicio.objects.get(id=id)
     servicio.delete()
     return redirect('lista_servicios')
 
+@login_required
 def lista_ordenes_pedido(request):
     ordenes = OrdenPedido.objects.all()
     return render(request, 'gestion_clientes/lista_ordenes_pedido.html', {'ordenes': ordenes})
 
+@login_required
 def crear_orden_pedido(request):
     if request.method == 'POST':
         form = FormularioOrdenPedido(request.POST)
@@ -200,10 +220,12 @@ def crear_orden_pedido(request):
     return render(request, 'gestion_clientes/form_orden_pedido.html', {'form': form})
 
 
+@login_required
 def lista_recepciones(request):
     recepciones = RecepcionProducto.objects.all()
     return render(request, 'gestion_clientes/lista_recepciones.html', {'recepciones': recepciones})
 
+@login_required
 def crear_recepcion(request):
     if request.method == 'POST':
         form = FormularioRecepcionProducto(request.POST)
@@ -214,6 +236,7 @@ def crear_recepcion(request):
         form = FormularioRecepcionProducto()
     return render(request, 'gestion_clientes/form_recepcion.html', {'form': form})
 
+@login_required
 def informes(request):
     num_clientes = Cliente.objects.count()
     num_reservas = Reserva.objects.count()
@@ -225,6 +248,7 @@ def informes(request):
         'ingresos_totales': ingresos_totales['total__sum']
     })
 
+@login_required
 def eliminar_orden_pedido(request, id):
     orden = get_object_or_404(OrdenPedido, id=id)
     if request.method == 'POST':
